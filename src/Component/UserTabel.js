@@ -1,12 +1,35 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { removeUser } from '../utitlity/userSlice';
 
 const UserTabel = () => {
-    const users = useSelector(state => state.users)
+    const users = useSelector(state => state.users);
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const handleEdit = (id) => {
+        navigate(`/userForm/${id}`);
+    }
+
+    const handleDelete = (id) => {
+        dispatch(removeUser({ id: parseInt(id) }))
+    }
     return (
         <div>
-            <table class="table caption-top">
-                <caption>List of users</caption>
+            <div className="row">
+                <div className="col-md-6 offset-3">
+                    <div className="card">
+                        <div className="card-header bg-info">
+                            <h4 className='text-center'>User Details</h4>
+                        </div>
+                        <div className="card-body">
+                        <table class="table caption-top">
+                <caption>
+                <button className='btn btn-success'>
+                    <Link to='/userForm'>Create</Link>
+                </button>
+                </caption>
                 <thead>
                     <tr>
                         <th scope="col">Sr.No</th>
@@ -25,8 +48,8 @@ const UserTabel = () => {
                                     <td>{user.age}</td>
                                     <td>
 
-                                        <button className='btn btn-success mx-2'>Edit</button>
-                                        <button className='btn btn-danger'>Delete</button>
+                                        <button className='btn btn-success mx-2' onClick={()=>handleEdit(user.id)}>Edit</button>
+                                        <button className='btn btn-danger' onClick={()=>handleDelete(user.id)}>Delete</button>
                                     </td>
                                 </tr>
                             )
@@ -34,6 +57,11 @@ const UserTabel = () => {
                     }
                 </tbody>
             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 };

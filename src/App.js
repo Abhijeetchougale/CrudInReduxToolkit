@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<UserTabel />}></Route>
-          <Route path='/userForm' element={<UserForm/>}></Route>
+          <Route path='/userForm/:id?' element={<UserForm/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
